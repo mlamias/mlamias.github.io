@@ -54,7 +54,7 @@
       day:       'numeric',
       year:      'numeric'
     });
-    document.getElementById('date').textContent = dateStr;
+    document.getElementById('date').textContent = 'Today is: ' + dateStr;
 
     // Time in Arizona timezone: 12:30 PM
     var timeStr = now.toLocaleTimeString('en-US', {
