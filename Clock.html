@@ -19,7 +19,6 @@
   }
   #date {
     font-size: 52px;
-    font-family: Arial;
     font-weight: bold;
     color: black;
     text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
@@ -27,7 +26,6 @@
   }
   #time {
     font-size: 52px;
-    font-family: Arial;
     font-weight: bold;
     color: black;
     text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
@@ -41,32 +39,33 @@
   <div id="time"></div>
 </div>
 <script>
+  var TZ = 'America/Phoenix'; // Arizona — never observes DST, always UTC-7
+
   function update() {
     var now = new Date();
 
-    // Date: Wednesday, February 25, 2026
-    var days   = ['Sunday','Monday','Tuesday','Wednesday',
-                  'Thursday','Friday','Saturday'];
-    var months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-    document.getElementById('date').textContent =
-      days[now.getDay()] + ', ' +
-      months[now.getMonth()] + ' ' +
-      now.getDate() + ', ' +
-      now.getFullYear();
+    // Date in Arizona timezone
+    var dateStr = now.toLocaleDateString('en-US', {
+      timeZone:  TZ,
+      weekday:   'long',
+      month:     'long',
+      day:       'numeric',
+      year:      'numeric'
+    });
+    document.getElementById('date').textContent = dateStr;
 
-    // Time: 12:30 PM (no seconds)
-    var h    = now.getHours();
-    var m    = now.getMinutes();
-    var ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12 || 12;
-    document.getElementById('time').textContent =
-      h + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+    // Time in Arizona timezone: 12:30 PM
+    var timeStr = now.toLocaleTimeString('en-US', {
+      timeZone:  TZ,
+      hour:      'numeric',
+      minute:    '2-digit',
+      hour12:    true
+    });
+    document.getElementById('time').textContent = timeStr;
   }
 
   update();
   setInterval(update, 1000);
 </script>
-<hr/>
 </body>
 </html>
